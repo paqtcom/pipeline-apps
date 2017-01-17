@@ -1,0 +1,11 @@
+version: '2'
+
+services:
+  workspace:
+    container_name: pipeline-apps
+    build: .
+    volumes:
+      - ./../:/var/www/projects
+      - /etc/localtime:/etc/localtime:ro
+    tty: true
+    dns: 8.8.8.8
