@@ -3,6 +3,11 @@ FROM php:7.1-fpm
 MAINTAINER Way2Web <developers@way2web.nl>
 
 RUN DEBIAN_FRONTEND=noninteractive
+
+# Set the locale
+RUN apt-get clean && apt-get update
+RUN apt-get install locales
+RUN locale-gen en_US.UTF-8
 ENV LC_ALL en_US.UTF-8
 ENV LANGUAGE en_US:en
 
