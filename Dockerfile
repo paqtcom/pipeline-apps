@@ -8,8 +8,8 @@ ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
 # Prepare mysql install
-RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections &&\
-echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
+RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections &&\
+echo "mysql-community-server mysql-community-server/re-root-pass password root" | debconf-set-selections
 
 
 # Install mysql 5.6
