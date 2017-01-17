@@ -57,16 +57,6 @@ RUN apt-get install -y \
 RUN curl -sSL https://deb.nodesource.com/setup_6.x | bash - &&\
     apt-get -y --no-install-recommends install nodejs
     
-# Globally install some packages
-RUN npm install -g gulp@3.9.1
-RUN npm install -g laravel-elixir@5.0.0
-RUN npm install -g eslint@3.7.1
-RUN npm install -g gulp-eslint@3.0.1
-RUN npm install -g stylelint@7.5.0
-RUN npm install -g stylelint-scss@1.3.4
-RUN npm install -g stylelint-config-sass-guidelines@1.1.0
-RUN npm install -g gulp-stylelint@3.4.0
-
 # Set the timezone
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
