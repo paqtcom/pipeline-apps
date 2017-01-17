@@ -11,6 +11,13 @@ ENV TZ ${TZ}
 RUN echo "mysql-server mysql-server/root_password password root" | debconf-set-selections &&\
 echo "mysql-server mysql-server/root_password_again password root" | debconf-set-selections
 
+
+# Install mysql 5.6
+RUN echo "mysql-apt-config mysql-apt-config/enable-repo select mysql-5.6" | debconf-set-selections
+RUN curl -sSL http://repo.mysql.com/mysql-apt-config_0.2.1-1debian7_all.deb -o ./mysql-apt-config_0.2.1-1debian7_all.deb
+RUN dpkg -i mysql-apt-config_0.2.1-1debian7_all.deb
+RUN apt-get update && apt-get -y install mysql-server-5.6
+
 # Install dependencies
 RUN apt-get update && apt-get install -y \
         libfreetype6-dev \
@@ -41,11 +48,6 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install mysqli pdo pdo_mysql \
     && docker-php-ext-install zip
     
-# Install mysql
-RUN apt-get install -y \
-    mysql-server \
-    mysql-client
-
 # Install usefull tools
 RUN apt-get install -y \
     git \
