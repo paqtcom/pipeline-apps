@@ -74,5 +74,8 @@ RUN curl -sSL http://static.phpmd.org/php/latest/phpmd.phar -o /usr/bin/phpmd &&
 RUN curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd
 RUN npm install --no-color --production --global gulp-cli webpack mocha grunt
 
+#Install Yarn
+RUN curl -o- -L https://yarnpkg.com/install.sh | bash
+
 # Clean up APT when done.
 RUN apt-get autoclean && apt-get clean && apt-get autoremove && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
