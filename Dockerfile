@@ -17,6 +17,7 @@ RUN echo "mysql-community-server mysql-community-server/root-pass password root"
 # Install dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
     mysql-server-5.6 \
+    mysql-client-5.6 \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
