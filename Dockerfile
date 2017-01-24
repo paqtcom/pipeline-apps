@@ -63,8 +63,15 @@ RUN curl -sSL https://deb.nodesource.com/setup_6.x | bash - &&\
     curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd &&\
     curl -o- -L https://yarnpkg.com/install.sh | bash
 
+# Add the startup script and set executable
+COPY ./.startup.sh /var/scripts/.startup.sh
+RUN chmod +x /var/scripts/.startup.sh
+
 # Clean up APT when done
 RUN apt-get autoclean &&\
     apt-get clean &&\
     apt-get autoremove &&\
     rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+# Run the startup script
+CMD ["/var/scripts/.startup.sh"]
