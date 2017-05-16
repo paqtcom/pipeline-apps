@@ -7,6 +7,9 @@ RUN DEBIAN_FRONTEND=noninteractive
 ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
+# add the mysql key
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 5072E1F5
+
 # Prepare and install mysql
 RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections &&\
     echo "mysql-community-server mysql-community-server/re-root-pass password root" | debconf-set-selections &&\
@@ -16,8 +19,7 @@ RUN echo "mysql-community-server mysql-community-server/root-pass password root"
 
 # Install dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    mysql-server-5.6 \
-    mysql-client-5.6 \
+    mysql-community-server \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
