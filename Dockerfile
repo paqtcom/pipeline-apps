@@ -7,6 +7,9 @@ RUN DEBIAN_FRONTEND=noninteractive
 ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
+# add the mysql key
+RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 5072E1F5
+
 # Prepare and install mysql
 RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections &&\
     echo "mysql-community-server mysql-community-server/re-root-pass password root" | debconf-set-selections &&\
@@ -16,8 +19,7 @@ RUN echo "mysql-community-server mysql-community-server/root-pass password root"
 
 # Install dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y \
-    mysql-server-5.6 \
-    mysql-client-5.6 \
+    mysql-community-server \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
@@ -33,7 +35,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     ssmtp \
     git \
     mercurial \
-    zip
+    zip \
+    xvfb gtk2-engines-pixbuf xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable imagemagick x11-apps
 
 # Install PHP extensions
 RUN docker-php-ext-install -j$(nproc) bz2 &&\
@@ -63,6 +66,11 @@ RUN curl -sSL https://deb.nodesource.com/setup_6.x | bash - &&\
     curl -sSL http://static.phpmd.org/php/latest/phpmd.phar -o /usr/bin/phpmd && chmod +x /usr/bin/phpmd &&\
     curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd &&\
     curl -o- -L https://yarnpkg.com/install.sh | bash
+
+#Install chrome - needed for Laravel Dusk
+RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
+    sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
+    apt-get update && apt-get install -y google-chrome-stable
 
 # Clean up APT when done
 RUN apt-get autoclean &&\
