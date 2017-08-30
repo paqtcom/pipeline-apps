@@ -55,6 +55,9 @@ RUN docker-php-ext-install -j$(nproc) bz2 &&\
     docker-php-ext-install imap &&\
     docker-php-ext-install mysqli pdo pdo_mysql &&\
     docker-php-ext-install zip
+    
+RUN docker-php-ext-configure pcntl --enable-pcntl && \
+  docker-php-ext-install pcntl
 
 # Install Composer for Laravel/Codeigniter, NodeJS and other dependencies
 RUN curl -sSL https://deb.nodesource.com/setup_6.x | bash - &&\
