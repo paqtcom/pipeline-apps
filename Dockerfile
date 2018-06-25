@@ -59,16 +59,33 @@ RUN docker-php-ext-install -j$(nproc) bz2 &&\
 RUN docker-php-ext-configure pcntl --enable-pcntl && \
   docker-php-ext-install pcntl
 
-# Install Composer for Laravel/Codeigniter, NodeJS and other dependencies
-RUN curl -sSL https://deb.nodesource.com/setup_6.x | bash - &&\
-    apt-get -y --no-install-recommends install nodejs &&\
-    curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin &&\
+# Prepare and install NVM
+ENV NVM_DIR /root/.nvm
+
+RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash &&\
+  . /root/.nvm/nvm.sh &&\
+  nvm install 10 &&\
+  nvm install 8 &&\
+  nvm install 6 &&\
+  nvm alias default 10
+  
+RUN echo "" >> ~/.bashrc && \
+  echo 'export NVM_DIR="/root/.nvm"' >> ~/.bashrc && \
+  echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
+
+[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
+curl -o- -L https://yarnpkg.com/install.sh | bash; \
+
+echo "" >> ~/.bashrc && \
+echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc
+
+# Install Composer for Laravel/Codeigniter and other dependencies
+RUN curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin &&\
     curl -sSL https://phar.phpunit.de/phpunit.phar -o /usr/bin/phpunit  && chmod +x /usr/bin/phpunit &&\
     curl -sSL http://codeception.com/codecept.phar -o /usr/bin/codecept && chmod +x /usr/bin/codecept &&\
     curl -sSL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/bin/phpcs && chmod +x /usr/bin/phpcs &&\
     curl -sSL http://static.phpmd.org/php/latest/phpmd.phar -o /usr/bin/phpmd && chmod +x /usr/bin/phpmd &&\
-    curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd &&\
-    curl -o- -L https://yarnpkg.com/install.sh | bash
+    curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd
 
 #Install chrome - needed for Laravel Dusk
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
