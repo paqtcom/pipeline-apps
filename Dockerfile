@@ -10,7 +10,7 @@ ENV TZ ${TZ}
 RUN apt-get update && apt-get install -y gnupg apt-transport-https ca-certificates
 
 # add the mysql key
-RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
+RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 5072E1F5
 
 # Prepare and install mysql
 RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections &&\
@@ -20,7 +20,7 @@ RUN echo "mysql-community-server mysql-community-server/root-pass password root"
     dpkg -i mysql-apt-config_0.2.1-1debian7_all.deb
 
 # Install dependencies
-RUN apt-get install --no-install-recommends -y \
+RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     mysql-community-server \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
