@@ -7,10 +7,10 @@ RUN DEBIAN_FRONTEND=noninteractive
 ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
-RUN apt-get update && apt-get install -y gnupg
+RUN apt-get update && apt-get install -y gnupg apt-transport-https ca-certificates
 
 # add the mysql key
-RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 5072E1F5
+RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 573BFD6B3D8FBC641079A6ABABF5BD827BD9BF62
 
 # Prepare and install mysql
 RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections &&\
