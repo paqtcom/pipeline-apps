@@ -36,6 +36,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     git \
     mercurial \
     zip \
+    gnupg \
     xvfb gtk2-engines-pixbuf xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable imagemagick x11-apps
 
 # Install PHP extensions
