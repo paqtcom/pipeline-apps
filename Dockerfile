@@ -7,6 +7,8 @@ RUN DEBIAN_FRONTEND=noninteractive
 ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
+RUN apt-get update && apt-get install --no-install-recommends -y gnupg2
+
 # add the mysql key
 RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 5072E1F5
 
@@ -18,7 +20,7 @@ RUN echo "mysql-community-server mysql-community-server/root-pass password root"
     dpkg -i mysql-apt-config_0.2.1-1debian7_all.deb
 
 # Install dependencies
-RUN apt-get update && apt-get install --no-install-recommends -y \
+RUN apt-get install --no-install-recommends -y \
     mysql-community-server \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
@@ -36,7 +38,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     git \
     mercurial \
     zip \
-    gnupg \
     xvfb gtk2-engines-pixbuf xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable imagemagick x11-apps
 
 # Install PHP extensions
@@ -73,12 +74,10 @@ RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh
 RUN echo "" >> ~/.bashrc && \
   echo 'export NVM_DIR="/root/.nvm"' >> ~/.bashrc && \
   echo '[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm' >> ~/.bashrc \
-
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
-curl -o- -L https://yarnpkg.com/install.sh | bash; \
-
-echo "" >> ~/.bashrc && \
-echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc
+  [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh" && \
+  curl -o- -L https://yarnpkg.com/install.sh | bash; \
+  echo "" >> ~/.bashrc && \
+  echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc
 
 # Install Composer for Laravel/Codeigniter and other dependencies
 RUN curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin &&\
