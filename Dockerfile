@@ -7,7 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive
 ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
-RUN apt-get update && apt-get install --no-install-recommends -y gnupg2
+RUN apt-get update && apt-get install -y gnupg
 
 # add the mysql key
 RUN apt-key adv --keyserver hkp://pgp.mit.edu:80 --recv-keys 5072E1F5
