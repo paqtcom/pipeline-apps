@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
-    libpng12-dev \
+    libpng-dev \
     libcurl4-nss-dev \
     libc-client-dev \
     libkrb5-dev \
