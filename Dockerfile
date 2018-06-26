@@ -29,7 +29,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     libcurl4-nss-dev \
     libc-client-dev \
     libkrb5-dev \
-    firebird2.5-dev \
+    firebird-dev \
     libicu-dev \
     libxml2-dev \
     libxslt1-dev \
