@@ -42,6 +42,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
 
 # Install PHP extensions
 RUN docker-php-ext-install -j$(nproc) bz2 &&\
+    docker-php-ext-install -j$(nproc) bcmath &&\
     docker-php-ext-install -j$(nproc) mcrypt &&\
     docker-php-ext-install -j$(nproc) curl &&\
     docker-php-ext-install -j$(nproc) mbstring &&\
