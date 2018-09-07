@@ -7,7 +7,7 @@ RUN DEBIAN_FRONTEND=noninteractive
 ARG TZ=Europe/Amsterdam
 ENV TZ ${TZ}
 
-RUN apt-get update && apt-get install -y gnupg apt-transport-https ca-certificates
+RUN apt-get update && apt-get install -y gnupg apt-transport-https ca-certificates lsb-release wget
 
 # add the mysql key
 RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 5072E1F5
@@ -15,13 +15,15 @@ RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 5072E1F
 # Prepare and install mysql
 RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections &&\
     echo "mysql-community-server mysql-community-server/re-root-pass password root" | debconf-set-selections &&\
-    echo "mysql-apt-config mysql-apt-config/enable-repo select mysql-5.6" | debconf-set-selections &&\
-    curl -sSL http://repo.mysql.com/mysql-apt-config_0.2.1-1debian7_all.deb -o ./mysql-apt-config_0.2.1-1debian7_all.deb &&\
-    dpkg -i mysql-apt-config_0.2.1-1debian7_all.deb
+    echo "mysql-apt-config mysql-apt-config/select-server select mysql-5.7" | debconf-set-selections &&\
+    curl -sSL http://repo.mysql.com/mysql-apt-config_0.8.9-1_all.deb -o ./mysql-apt-config_0.8.9-1_all.deb &&\
+    export DEBIAN_FRONTEND=noninteractive &&\
+    dpkg -i mysql-apt-config_0.8.9-1_all.deb
 
 # Install dependencies
 RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     mysql-community-server \
+    mysql-client \
     libfreetype6-dev \
     libjpeg62-turbo-dev \
     libmcrypt-dev \
@@ -38,7 +40,19 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     git \
     mercurial \
     zip \
-    xvfb gtk2-engines-pixbuf xfonts-cyrillic xfonts-100dpi xfonts-75dpi xfonts-base xfonts-scalable imagemagick x11-apps
+    xvfb \
+    gtk2-engines-pixbuf \
+    xfonts-cyrillic \
+    xfonts-100dpi \
+    xfonts-75dpi  \
+    xfonts-base \
+    xfonts-scalable \
+    imagemagick \
+    x11-apps
+
+# Add maximum backwards compatibility with MySQL 5.6
+RUN echo "[mysqld]" >> /etc/mysql/conf.d/z-pipelines-config.cnf && \
+    echo 'sql_mode = "NO_ENGINE_SUBSTITUTION"' >> /etc/mysql/conf.d/z-pipelines-config.cnf
 
 # Install PHP extensions
 RUN docker-php-ext-install -j$(nproc) bz2 &&\
