@@ -9,9 +9,6 @@ ENV TZ ${TZ}
 
 RUN apt-get update && apt-get install -y gnupg apt-transport-https ca-certificates lsb-release wget
 
-# add the mysql key
-
-# gpg keys listed at https://github.com/nodejs/node#release-team
 RUN set -ex \
   && for key in \
     5072E1F5 \
