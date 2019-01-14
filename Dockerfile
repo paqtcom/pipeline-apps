@@ -1,4 +1,4 @@
-FROM php:7.1-cli
+FROM php:7.2-cli
 
 MAINTAINER Way2Web <developers@way2web.nl>
 
@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     libicu-dev \
     libxml2-dev \
     libxslt1-dev \
-    libbz2-dev \
+    libzip-dev
     ssmtp \
     git \
     mercurial \
