@@ -10,7 +10,16 @@ ENV TZ ${TZ}
 RUN apt-get update && apt-get install -y gnupg apt-transport-https ca-certificates lsb-release wget
 
 # add the mysql key
-RUN apt-key adv --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys 5072E1F5
+
+# gpg keys listed at https://github.com/nodejs/node#release-team
+RUN set -ex \
+  && for key in \
+    5072E1F5 \
+  ; do \
+    gpg --batch --keyserver hkp://ipv4.pool.sks-keyservers.net --recv-keys "$key" || \
+    gpg --batch --keyserver hkp://pgp.mit.edu:80 --recv-keys "$key" || \
+    gpg --batch --keyserver hkp://pool.sks-keyservers.net:80 --recv-keys "$key" ; \
+  done; exit 0
 
 # Prepare and install mysql
 RUN echo "mysql-community-server mysql-community-server/root-pass password root" | debconf-set-selections &&\
@@ -35,6 +44,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     libicu-dev \
     libxml2-dev \
     libxslt1-dev \
+    libbz2-dev \
     libzip-dev \
     ssmtp \
     git \
