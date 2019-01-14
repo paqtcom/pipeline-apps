@@ -64,7 +64,6 @@ RUN echo "[mysqld]" >> /etc/mysql/conf.d/z-pipelines-config.cnf && \
 # Install PHP extensions
 RUN docker-php-ext-install -j$(nproc) bz2 &&\
     docker-php-ext-install -j$(nproc) bcmath &&\
-    docker-php-ext-install -j$(nproc) mcrypt &&\
     docker-php-ext-install -j$(nproc) curl &&\
     docker-php-ext-install -j$(nproc) mbstring &&\
     docker-php-ext-install -j$(nproc) iconv &&\
