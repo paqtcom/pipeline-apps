@@ -35,7 +35,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
     libicu-dev \
     libxml2-dev \
     libxslt1-dev \
-    libzip-dev
+    libzip-dev \
     ssmtp \
     git \
     mercurial \
