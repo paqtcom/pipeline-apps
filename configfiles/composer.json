@@ -1,0 +1,9 @@
+{
+    "require": {
+        "friendsofphp/php-cs-fixer": "^2.8",
+        "phpmd/phpmd": "^2.4",
+        "phpunit/phpunit": "^7.5",
+        "sebastian/phpcpd": "^4.0",
+        "squizlabs/php_codesniffer": "^3.3"
+    }
+}

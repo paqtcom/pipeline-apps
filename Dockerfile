@@ -100,13 +100,19 @@ RUN echo "" >> ~/.bashrc && \
   echo "" >> ~/.bashrc && \
   echo 'export PATH="$HOME/.yarn/bin:$PATH"' >> ~/.bashrc
 
-# Install Composer for Laravel/Codeigniter and other dependencies
-RUN curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin &&\
-    curl -sSL https://phar.phpunit.de/phpunit.phar -o /usr/bin/phpunit  && chmod +x /usr/bin/phpunit &&\
-    curl -sSL http://codeception.com/codecept.phar -o /usr/bin/codecept && chmod +x /usr/bin/codecept &&\
-    curl -sSL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/bin/phpcs && chmod +x /usr/bin/phpcs &&\
-    curl -sSL http://static.phpmd.org/php/latest/phpmd.phar -o /usr/bin/phpmd && chmod +x /usr/bin/phpmd &&\
-    curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd
+# Install Composer
+RUN curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin
+RUN echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
+
+# Copy the php-cs-fixer rules inside the docker container
+COPY ./configfiles/.php_cs /root/configfiles/.php_cs
+
+# Add our list of wanted packages
+COPY ./configfiles/composer.json /root/.composer/composer.json
+COPY ./configfiles/composer.lock /root/.composer/composer.lock
+
+# Install the packages
+RUN cd /root/.composer && composer install
 
 #Install chrome - needed for Laravel Dusk
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
