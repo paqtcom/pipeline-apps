@@ -109,6 +109,7 @@ COPY ./configfiles/.php_cs /root/configfiles/.php_cs
 
 # Add our list of wanted packages
 COPY ./configfiles/composer.json /root/.composer/composer.json
+COPY ./configfiles/composer.lock /root/.composer/composer.lock
 
 # Install the packages
 RUN cd /root/.composer && composer install
