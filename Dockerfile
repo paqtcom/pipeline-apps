@@ -106,8 +106,9 @@ RUN curl -sSL https://getcomposer.org/installer | php -- --filename=composer --i
     curl -sSL http://codeception.com/codecept.phar -o /usr/bin/codecept && chmod +x /usr/bin/codecept &&\
     curl -sSL https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar -o /usr/bin/phpcs && chmod +x /usr/bin/phpcs &&\
     curl -sSL http://static.phpmd.org/php/latest/phpmd.phar -o /usr/bin/phpmd && chmod +x /usr/bin/phpmd &&\
-    curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd &&\
-    curl -sSL https://cs.symfony.com/download/php-cs-fixer-v2.phar -o /usr/bin/php-cs-fixer && chmod +x /usr/bin/php-cs-fixer
+    curl -sSL https://phar.phpunit.de/phpcpd.phar -o /usr/bin/phpcpd && chmod +x /usr/bin/phpcpd
+    
+RUN curl -sSL https://cs.symfony.com/download/php-cs-fixer-v2.phar -o /usr/bin/php-cs-fixer && chmod +x /usr/bin/php-cs-fixer
 
 # Copy the php-cs-fixer rules inside the docker container
 COPY ./configfiles/.php_cs /root/configfiles/.php_cs
