@@ -105,6 +105,9 @@ COPY ./configfiles/.php_cs /root/configfiles/.php_cs
 COPY ./configfiles/composer.json /root/.composer/composer.json
 COPY ./configfiles/composer.lock /root/.composer/composer.lock
 
+# Load PHPCS rulesets
+RUN phpcs --config-set installed_paths vendor/pheromone/phpcs-security-audit/Security,vendor/phpcompatibility/php-compatibility/PHPCompatibility
+
 # Install the packages
 RUN cd /root/.composer && composer install
 
