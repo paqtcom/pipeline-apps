@@ -36,7 +36,6 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
   libxslt1-dev \
   libbz2-dev \
   libzip-dev \
-  ssmtp \
   git \
   mercurial \
   zip \
@@ -105,11 +104,11 @@ COPY ./configfiles/.php_cs /root/configfiles/.php_cs
 COPY ./configfiles/composer.json /root/.composer/composer.json
 COPY ./configfiles/composer.lock /root/.composer/composer.lock
 
-# Load PHPCS rulesets
-RUN phpcs --config-set installed_paths vendor/pheromone/phpcs-security-audit/Security,vendor/phpcompatibility/php-compatibility/PHPCompatibility
-
 # Install the packages
-RUN cd /root/.composer && composer install
+RUN cd /root/.composer && composer global install
+
+# Load PHPCS rulesets
+RUN ~/.composer/vendor/bin/phpcs --config-set installed_paths vendor/pheromone/phpcs-security-audit/Security,vendor/phpcompatibility/php-compatibility/PHPCompatibility
 
 #Install chrome - needed for Laravel Dusk
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
