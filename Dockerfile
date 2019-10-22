@@ -108,7 +108,7 @@ COPY ./configfiles/composer.lock /root/.composer/composer.lock
 RUN cd /root/.composer && composer global install
 
 # Load PHPCS rulesets
-RUN ~/.composer/vendor/bin/phpcs --config-set installed_paths vendor/pheromone/phpcs-security-audit/Security,vendor/phpcompatibility/php-compatibility/PHPCompatibility
+RUN ~/.composer/vendor/bin/phpcs --config-set installed_paths /root/.composer/vendor/pheromone/phpcs-security-audit/Security,/root/.composer/vendor/phpcompatibility/php-compatibility
 
 #Install chrome - needed for Laravel Dusk
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
