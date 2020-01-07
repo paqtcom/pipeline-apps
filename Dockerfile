@@ -47,7 +47,9 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
   xfonts-base \
   xfonts-scalable \
   imagemagick \
-  x11-apps
+  x11-apps \
+  zip \
+  openssh-client
 
 # Add maximum backwards compatibility with MySQL 5.6
 RUN echo "[mysqld]" >> /etc/mysql/conf.d/z-pipelines-config.cnf && \
