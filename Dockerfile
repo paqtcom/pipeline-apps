@@ -48,7 +48,7 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
   xfonts-scalable \
   imagemagick \
   x11-apps \
-  zip \
+  unzip \
   openssh-client
 
 # Add maximum backwards compatibility with MySQL 5.6
