@@ -1,17 +1,25 @@
 # pipeline-apps
 
-## Building and releasing the docker image
+## Available tags
+- `latest`
 
-Ensure you are logged in locally to hub.docker.com using `docker login` (note: your username is used, not your email address).
+## Building and publishing
+
+Ensure you are logged in locally to hub.docker.com using `docker login` and have access to the hub repository.
+(note: your username is used, not your email address).
 
 ```
 $ docker build ./ --tag way2web/pipeline-apps:TAG
 $ docker push way2web/pipeline-apps:TAG
 ```
-Replace `TAG` with either develop or latest. 
 
-Please note, that latest is used in production. 
-So only tag and push this one once you know there are no issues with the current build!
+Replace `TAG` with the tag you are working on.
+
+## Development
+
+If you want to test a new feature, create a new tag for it. This way, it can not introduce issues in the production image if something is not working properly.
+
+Once it works, delete the custom tag and introduce it into `latest`
 
 ## Testing the image locally
 
