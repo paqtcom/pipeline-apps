@@ -100,6 +100,8 @@ ENV NVM_DIR /root/.nvm
 
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash &&\
   . /root/.nvm/nvm.sh &&\
+  nvm install 14 &&\
+  nvm install 12 &&\
   nvm install 10 &&\
   nvm install 8 &&\
   nvm install 6 &&\
