@@ -137,6 +137,10 @@ RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add
   sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
   apt-get update && apt-get install -y google-chrome-stable
 
+# For easy Laravel Dusk driver management, make an environment variable available with the Chrome version
+RUN google-chrome --version | grep -ioEh "([0-9]){2}" | head -n 1 > /root/chrome_version
+RUN echo 'export CHROME_VERSION=$(cat /root/chrome_version)' >> ~/.bashrc
+
 # Clean up APT when done
 RUN apt-get autoclean &&\
   apt-get clean &&\
