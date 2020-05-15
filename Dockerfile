@@ -49,27 +49,20 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
   imagemagick \
   x11-apps \
   unzip \
-  openssh-client
+  openssh-client \
+  graphviz \
+  doxygen
+
+# Install java
+RUN mkdir -p /usr/share/man/man1
+RUN apt-get install --no-install-recommends -y --force-yes default-jre-headless
+
+# Install plantuml
+RUN apt-get install --no-install-recommends -y --force-yes plantuml
 
 # Add maximum backwards compatibility with MySQL 5.6
 RUN echo "[mysqld]" >> /etc/mysql/conf.d/z-pipelines-config.cnf && \
   echo 'sql_mode = "NO_ENGINE_SUBSTITUTION"' >> /etc/mysql/conf.d/z-pipelines-config.cnf
-
-# Install the Oracle client
-RUN mkdir /opt/oracle \
-  && cd /opt/oracle
-
-RUN wget -O /opt/oracle/instantclient-basic-linux.x64-19.5.0.0.0dbru.zip https://github.com/johanvanhelden/dockerhero-oracle/raw/master/19.5/instantclient-basic-linux.x64-19.5.0.0.0dbru.zip && \
-  wget -O /opt/oracle/instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip https://github.com/johanvanhelden/dockerhero-oracle/raw/master/19.5/instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip && \
-  unzip /opt/oracle/instantclient-basic-linux.x64-19.5.0.0.0dbru.zip -d /opt/oracle && \
-  unzip /opt/oracle/instantclient-sdk-linux.x64-19.5.0.0.0dbru.zip -d /opt/oracle && \
-  rm -rf /opt/oracle/*.zip
-
-RUN ln -s /opt/oracle/instantclient_19_5/libclntshcore.so.19.1 /opt/oracle/instantclient_19_5/libclntshcore.so
-
-ENV LD_LIBRARY_PATH  /opt/oracle/instantclient_19_5:${LD_LIBRARY_PATH}
-
-RUN echo 'instantclient,/opt/oracle/instantclient_19_5/' | pecl install oci8
 
 # Install PHP extensions
 RUN docker-php-ext-install -j$(nproc) bz2 &&\
@@ -89,11 +82,10 @@ RUN docker-php-ext-install -j$(nproc) bz2 &&\
   docker-php-ext-install imap &&\
   docker-php-ext-install mysqli pdo pdo_mysql &&\
   docker-php-ext-install zip &&\
-  docker-php-ext-configure pcntl --enable-pcntl && \
-  docker-php-ext-install pcntl &&\
-  docker-php-ext-enable oci8 &&\
-  docker-php-ext-configure pdo_oci --with-pdo-oci=instantclient,/opt/oracle/instantclient_19_5,19.5 &&\
-  docker-php-ext-install pdo_oci  
+  docker-php-ext-configure pcntl --enable-pcntl &&\
+  docker-php-ext-install pcntl
+
+RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/memory-limit-php.ini
 
 # Prepare and install NVM
 ENV NVM_DIR /root/.nvm
@@ -119,18 +111,12 @@ RUN echo "" >> ~/.bashrc && \
 RUN curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin
 RUN echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
 
-# Copy the php-cs-fixer rules inside the docker container
-COPY ./configfiles/.php_cs /root/configfiles/.php_cs
-
 # Add our list of wanted packages
 COPY ./configfiles/composer.json /root/.composer/composer.json
 COPY ./configfiles/composer.lock /root/.composer/composer.lock
 
 # Install the packages
 RUN cd /root/.composer && composer global install
-
-# Load PHPCS rulesets
-RUN ~/.composer/vendor/bin/phpcs --config-set installed_paths /root/.composer/vendor/pheromone/phpcs-security-audit/Security,/root/.composer/vendor/phpcompatibility/php-compatibility
 
 #Install chrome - needed for Laravel Dusk
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
