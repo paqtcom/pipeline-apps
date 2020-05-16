@@ -17,6 +17,7 @@
         "dephpend/dephpend": "dev-master",
         "bmitch/churn-php": "^1.0",
         "jakub-onderka/php-parallel-lint": "^1.0",
-        "niels-de-blaauw/php-doc-check": "^0.2.0@dev"
+        "niels-de-blaauw/php-doc-check": "^0.2.0@dev",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
   }
 }
