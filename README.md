@@ -28,6 +28,25 @@ $ docker-compose up --build
 $ docker exec -it pipeline-apps bash
 ```
 
+## Laravel Dusk Chrome Driver
+
+If the image is updated, Chrome is updated as well. This might break your Dusk test if you are using an older Chrome driver.
+To make sure this does not happen, you can use artisan to download the proper Chrome driver based on this image's Chrome version.
+
+A `CHROME_VERSION` environment variable is available containing the current Chrome version (i.e. `79`). So you can automate downloading the proper Chrome version like this:
+
+```bash
+php artisan dusk:chrome-driver ${CHROME_VERSION}
+```
+
+If the platform you run Dusk on does not support reading the environment variables from the docker image, you can, for example, manually create the variable, like so:
+
+```bash
+CHROME_VERSION=$(cat /root/chrome_version)
+```
+
+Make sure you create it before running the download command.
+
 ## Accessing projects
 Projects are mounted to `/var/www/projects`.
 
