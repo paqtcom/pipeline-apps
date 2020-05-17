@@ -51,7 +51,8 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
   unzip \
   openssh-client \
   graphviz \
-  doxygen
+  doxygen \
+  procps
 
 # Install java
 RUN mkdir -p /usr/share/man/man1
