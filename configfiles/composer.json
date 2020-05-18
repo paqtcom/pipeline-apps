@@ -14,7 +14,10 @@
         "sensiolabs/security-checker": "^6.0",
         "squizlabs/php_codesniffer": "^3.5",
         "wapmorgan/php-code-fixer": "^2.0",
-        "dephpend/dephpend": "dev-master",
-        "bmitch/churn-php": "^1.0"
+        "dephpend/dephpend": "^0.6",
+        "bmitch/churn-php": "^1.0",
+        "jakub-onderka/php-parallel-lint": "^1.0",
+        "niels-de-blaauw/php-doc-check": "^0.2.0@dev",
+        "dealerdirect/phpcodesniffer-composer-installer": "^0.6.2"
   }
 }
