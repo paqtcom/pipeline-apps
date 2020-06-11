@@ -52,7 +52,10 @@ RUN apt-get update && apt-get install --no-install-recommends -y --force-yes \
   openssh-client \
   graphviz \
   doxygen \
-  procps
+  procps \
+  libmagickwand-dev
+
+RUN printf "\n" | pecl install imagick
 
 # Install java
 RUN mkdir -p /usr/share/man/man1
@@ -84,7 +87,8 @@ RUN docker-php-ext-install -j$(nproc) bz2 &&\
   docker-php-ext-install mysqli pdo pdo_mysql &&\
   docker-php-ext-install zip &&\
   docker-php-ext-configure pcntl --enable-pcntl &&\
-  docker-php-ext-install pcntl
+  docker-php-ext-install pcntl && docker-php-ext-enable imagick &&\
+  docker-php-ext-enable imagick
 
 RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/memory-limit-php.ini
 
