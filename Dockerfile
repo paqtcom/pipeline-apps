@@ -116,13 +116,6 @@ RUN echo "" >> ~/.bashrc && \
 RUN curl -sSL https://getcomposer.org/installer | php -- --filename=composer --install-dir=/usr/bin
 RUN echo 'export PATH="$HOME/.composer/vendor/bin:$PATH"' >> ~/.bashrc
 
-# Add our list of wanted packages
-COPY ./configfiles/composer.json /root/.composer/composer.json
-COPY ./configfiles/composer.lock /root/.composer/composer.lock
-
-# Install the packages
-RUN cd /root/.composer && composer global install
-
 #Install chrome - needed for Laravel Dusk
 RUN curl -sS https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - && \
   sh -c 'echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google-chrome.list' && \
