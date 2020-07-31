@@ -1,7 +1,67 @@
 # pipeline-apps
 
+A docker image containing all of the tools necessary to build and test a Laravel application.
+
+- **PHP version:** 7.3
+- **MySQL version:** 5.7
+- **NodeJS versions:** 6, 8, 10, 12, 14
+
+### PHP Modules:
+```
+bcmath
+bz2
+Core
+ctype
+curl
+date
+dom
+exif
+fileinfo
+filter
+ftp
+gd
+hash
+iconv
+imap
+interbase
+intl
+json
+libxml
+mbstring
+mysqli
+mysqlnd
+oci8
+openssl
+pcntl
+pcre
+PDO
+pdo_mysql
+PDO_OCI
+pdo_sqlite
+Phar
+posix
+readline
+Reflection
+session
+SimpleXML
+soap
+sodium
+SPL
+sqlite3
+standard
+tokenizer
+xml
+xmlreader
+xmlrpc
+xmlwriter
+xsl
+zip
+zlib
+```
+
 ## Available tags
-- `latest`
+- `v1` For PHP 7.3
+- `latest` (depricated - for backward compatibility only)
 
 ## Building and publishing
 
