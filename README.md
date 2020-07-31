@@ -22,8 +22,8 @@ ftp
 gd
 hash
 iconv
+imagick
 imap
-interbase
 intl
 json
 libxml
@@ -32,6 +32,7 @@ mysqli
 mysqlnd
 openssl
 pcntl
+pcov
 pcre
 PDO
 pdo_mysql
@@ -58,6 +59,7 @@ zlib
 ```
 
 ## Available tags
+- `v2` For PHP 7.4
 - `v1` For PHP 7.3
 - `latest` (depricated - for backward compatibility only)
 
