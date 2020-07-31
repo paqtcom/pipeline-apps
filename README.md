@@ -30,13 +30,11 @@ libxml
 mbstring
 mysqli
 mysqlnd
-oci8
 openssl
 pcntl
 pcre
 PDO
 pdo_mysql
-PDO_OCI
 pdo_sqlite
 Phar
 posix
