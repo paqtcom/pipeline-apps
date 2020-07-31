@@ -60,6 +60,7 @@ zlib
 ```
 
 ## Available tags
+- `v2` For PHP 7.4
 - `v1` For PHP 7.3
 - `latest` (depricated - for backward compatibility only)
 
