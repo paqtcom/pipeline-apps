@@ -88,6 +88,7 @@ RUN echo "memory_limit = -1" > /usr/local/etc/php/conf.d/memory-limit-php.ini
 
 RUN curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.2/install.sh | bash &&\
   . /root/.nvm/nvm.sh &&\
+  nvm install 16 &&\
   nvm install 14 &&\
   nvm install 12 &&\
   nvm install 10 &&\

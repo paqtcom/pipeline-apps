@@ -4,7 +4,7 @@ A docker image containing all of the tools necessary to build and test a Laravel
 
 - **PHP version:** 7.3
 - **MySQL version:** 5.7
-- **NodeJS versions:** 6, 8, 10, 12, 14
+- **NodeJS versions:** 6, 8, 10, 12, 14, 16
 
 ### PHP Modules:
 ```
